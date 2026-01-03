@@ -24,7 +24,7 @@ function App() {
         </Routes>
 
         <footer className="bg-white border-t mt-12 py-8 text-center text-gray-400 text-sm">
-          © 2026 Blog.
+          © 2026 Blog. All rights reserved.
         </footer>
       </div>
     </BrowserRouter>

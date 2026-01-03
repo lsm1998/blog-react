@@ -3,27 +3,17 @@ import { Link, useParams } from 'react-router-dom';
 import { PostCard } from './PostCard';
 import { useFetch } from '../hooks/useFetch';
 import { LoadingState, ErrorState } from './Status';
-import type { Article, PaginatedResponse } from '../types';
-
-// 定义后端 /api/tag 返回的数据格式
-interface TagStat {
-  name: string;
-  count: number;
-}
+import type { Article, PaginatedResponse,Tag } from '../types';
 
 export const Tags: React.FC = () => {
   const { tag: activeTag } = useParams<{ tag: string }>();
 
-  // 1. 获取标签云数据 (独立请求，不依赖 activeTag)
   const { 
-    data: tagCloudData = [], // 给个默认值 [] 防止 undefined
+    data: tagCloudData = [], 
     loading: tagsLoading, 
     error: tagsError 
-  } = useFetch<TagStat[]>('/api/tag');
+  } = useFetch<Tag[]>('/api/tag');
 
-  // 2. 获取文章列表 (服务端过滤)
-  // 如果没有选中标签，传 '' 或 null 给 useFetch，取决于你的 useFetch 是否支持跳过请求
-  // 这里假设 useFetch 内部有判断：如果 url 为空则不请求
   const articleUrl = activeTag 
     ? `/api/article?tag=${activeTag}&page=1&pageSize=100` 
     : '';
@@ -34,10 +24,8 @@ export const Tags: React.FC = () => {
     error: articlesError
   } = useFetch<PaginatedResponse<Article>>(articleUrl, [activeTag]);
 
-  // 如果标签云正在加载，显示 Loading
   if (tagsLoading) return <LoadingState message="正在加载标签索引..." />;
   
-  // 如果标签云加载失败 (这是页面的核心数据，如果挂了需要阻断)
   if (tagsError) return <ErrorState message={tagsError} onRetry={() => window.location.reload()} />;
 
   const filteredPosts = articleData?.list || [];
@@ -56,7 +44,7 @@ export const Tags: React.FC = () => {
             return (
               <Link
                 key={name}
-                to={isActive ? '/tags' : `/tags/${name}`} // 点击已选中的标签取消选择
+                to={isActive ? '/tags' : `/tags/${name}`}
                 className={`
                   px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border
                   ${isActive 
@@ -75,13 +63,11 @@ export const Tags: React.FC = () => {
         </div>
       </div>
 
-      {/* 底部：筛选结果列表 */}
       {activeTag ? (
         <div className="animate-fade-in">
           <div className="flex items-center mb-6 pb-2 border-b border-gray-200 dark:border-gray-700">
             <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">
               包含 <span className="text-blue-600">#{activeTag}</span> 的文章 
-              {/* 如果文章列表还没加载完，不显示数量 */}
               {!articlesLoading && (
                   <span className="text-sm font-normal text-gray-500 ml-2">({filteredPosts.length} 篇)</span>
               )}
@@ -94,7 +80,6 @@ export const Tags: React.FC = () => {
             </Link>
           </div>
           
-          {/* 文章列表加载状态处理 */}
           {articlesLoading ? (
              <LoadingState message="正在筛选文章..." />
           ) : articlesError ? (

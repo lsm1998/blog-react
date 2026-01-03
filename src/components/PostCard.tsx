@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import type { Article } from '../types';
+import { HighlightText } from './HighlightText';
 
 interface PostCardProps {
   post: Article;
+  highlightKeyword?: string;
 }
 
-export const PostCard: React.FC<PostCardProps> = ({ post }) => {
+export const PostCard: React.FC<PostCardProps> = ({ post, highlightKeyword = '' }) => {
   return (
     <div className="
       bg-white dark:bg-gray-800 
@@ -30,7 +32,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
                 dark:hover:bg-gray-600 dark:hover:text-blue-300
               "
             >
-              {tag}
+              <HighlightText text={tag} keyword={highlightKeyword} />
             </Link>
           ))}
         </div>
@@ -42,16 +44,19 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
           text-gray-800 dark:text-gray-100 
           group-hover:text-blue-600 dark:group-hover:text-blue-400
         ">
-          {post.title}
+          <HighlightText text={post.title} keyword={highlightKeyword} />
         </h2>
       </Link>
 
       <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-        {post.summary}
+        <HighlightText 
+            text={post.summary || post.content?.slice(0, 100) + '...'} 
+            keyword={highlightKeyword} 
+        />
       </p>
 
-      <Link 
-        to={`/post/${post.id}`} 
+      <Link
+        to={`/post/${post.id}`}
         className="
           inline-flex items-center font-medium text-sm hover:underline transition-colors
           text-blue-500 dark:text-blue-400
