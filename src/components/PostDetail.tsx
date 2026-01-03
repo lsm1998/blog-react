@@ -3,12 +3,22 @@ import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { MOCK_POSTS } from '../data';
+import { useFetch } from '../hooks/useFetch';
+import type { Article } from '../types';
 
 export const PostDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  const post = MOCK_POSTS.find(p => p.id === Number(id));
+  // 使用自定义 Hook 获取文章详情
+  const { data: post, loading, error } = useFetch<Article>(`/api/article/${id}`, [id]);
+
+  if (loading) {
+    return <div className="text-center py-20">正在加载文章...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-20">加载文章出错：{error}</div>;
+  }
 
   if (!post) {
     return <div className="text-center py-20">文章不存在</div>;
@@ -22,7 +32,7 @@ export const PostDetail: React.FC = () => {
 
       <header className="mb-10 border-b pb-8">
         <div className="flex gap-2 mb-4">
-          {post.tagNames.map((tag: string) => (
+          {(post.tagNames|| []).map((tag: string) => (
             <Link
               key={tag}
               to={`/tags/${tag}`}

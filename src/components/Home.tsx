@@ -10,7 +10,7 @@ import { PAGINATION } from '../constants';
 
 export const Home: React.FC = () => {
   const [page, setPage] = useState(1);
-
+  
   const { data, loading, error } = useFetch<PaginatedResponse<Article>>(
     `/api/article?page=${page}&pageSize=${PAGINATION.DEFAULT_PAGE_SIZE}`, 
     [page] 
@@ -33,25 +33,26 @@ export const Home: React.FC = () => {
   const total = data?.total || 0;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row gap-8 items-start">
-        
         <div className="md:w-3/4">
            <h1 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 border-l-4 border-blue-500 pl-3">
               最新文章
            </h1>
            
-           <div className="space-y-4"> 
+           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-h-[400px]"> 
              {articles.length > 0 ? (
                articles.map(post => (
-                 <PostCard key={post.id} post={post} />
+                 <div key={post.id} className="h-full"> 
+                    <PostCard post={post} />
+                 </div>
                ))
              ) : (
-               <div className="text-gray-500 text-center py-10">暂无文章</div>
+               <div className="col-span-full text-gray-500 text-center py-10">暂无文章</div>
              )}
            </div>
 
-           <div className="mt-8">
+           <div className="mt-10 border-t border-gray-100 pt-6">
               <Pagination 
                 currentPage={page}
                 totalCount={total}
@@ -61,11 +62,11 @@ export const Home: React.FC = () => {
            </div>
         </div>
 
+        {/* 右侧：侧边栏 (保持 sticky) */}
         <div className="md:w-1/4 sticky top-6">
           <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 border-l-4 border-purple-500 pl-3">
              关于作者
           </h2>
-          
           <ProfileCard />
         </div>
         

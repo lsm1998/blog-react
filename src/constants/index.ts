@@ -4,8 +4,9 @@ export const API_TIMEOUT_MS = 5000;
 
 // 分页配置
 export const PAGINATION = {
-  DEFAULT_PAGE_SIZE: 3,
+  DEFAULT_PAGE_SIZE: 4,
   MAX_PAGE_SIZE: 50,
+  ALL_PAGE_SIZE: 1000
 };
 
  // 默认头像 URL
