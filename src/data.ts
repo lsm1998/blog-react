@@ -1,4 +1,5 @@
 import type { Article, Tag, UserProfile, PaginatedResponse } from './types';
+import {DEFAULT_AVATAR} from './constants/index';
 
 export const MOCK_Articles: Article[] = [
   {
@@ -70,7 +71,7 @@ export const MOCK_Tags: Tag[] = [
 export const MOCK_User: UserProfile = {
   username: "tech_writer",
   description: "专注于系统编程与网络技术的技术博主",
-  headshot: "/images/headshot.png",
+  headshot: DEFAULT_AVATAR,
   position: "高级软件工程师",
   bio: "拥有10年以上C/C++开发经验，热衷于分享技术知识。",
   email: "test@gmail.com",

@@ -1,73 +1,109 @@
-# React + TypeScript + Vite
+# React Blog
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+一个基于 React + TypeScript + Vite 构建的现代化博客应用。
 
-Currently, two official plugins are available:
+## 技术栈
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** - UI 框架
+- **TypeScript** - 类型安全
+- **Vite** - 构建工具
+- **Tailwind CSS** - 样式框架
+- **React Router** - 路由管理
+- **React Markdown** - Markdown 渲染
+- **React Syntax Highlighter** - 代码高亮
 
-## React Compiler
+## 功能特性
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 📝 **首页** - 展示最新博客文章列表
+- 📄 **文章详情** - 展示完整文章内容，支持代码高亮
+- 📂 **归档** - 按年份和月份分类的文章归档
+- 🏷️ **标签** - 文章标签分类与筛选
+- 🔍 **搜索** - 文章标题和内容搜索
+- 📖 **关于** - 个人信息和博客介绍
+- 🎨 **响应式设计** - 适配各种屏幕尺寸
 
-## Expanding the ESLint configuration
+## 快速开始
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 安装依赖
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 启动开发服务器
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+访问 `http://localhost:5173` 查看应用。
+
+### Mock方式启动
+
+编辑.env文件将VITE_API_MOCK_MODE设置为true即可
+
+### 构建生产版本
+
+```bash
+npm run build
+```
+
+### 预览生产构建
+
+```bash
+npm run preview
+```
+
+### 代码检查
+
+```bash
+npm run lint
+```
+
+## 项目结构
+
+```
+src/
+├── components/          # React 组件
+│   ├── Header.tsx      # 头部导航
+│   ├── Home.tsx        # 首页
+│   ├── PostCard.tsx    # 文章卡片
+│   ├── PostDetail.tsx  # 文章详情
+│   ├── Archive.tsx     # 归档
+│   ├── Tags.tsx        # 标签
+│   ├── SearchPage.tsx  # 搜索页面
+│   ├── About.tsx       # 关于页面
+│   └── ...             # 其他组件
+├── data.ts             # 文章数据
+├── hooks/              # 自定义 Hooks
+├── types.ts            # TypeScript 类型定义
+├── App.tsx             # 应用入口组件
+├── App.css             # 应用样式
+└── main.tsx            # React 挂载点
+```
+
+## 组件说明
+
+- **Header** - 包含导航菜单和主题切换功能
+- **Home** - 展示分页的文章列表
+- **PostCard** - 文章预览卡片组件
+- **PostDetail** - 完整文章内容展示，支持 Markdown
+- **Archive** - 按日期归档的文章列表
+- **Tags** - 标签云展示和筛选
+- **SearchPage** - 搜索结果展示
+
+## 自定义 Hooks
+
+- **useFetch** - 数据请求 Hook
+- **useTheme** - 主题切换 Hook（未完成）
+
+## 浏览器支持
+
+- Chrome (最新版本)
+- Firefox (最新版本)
+- Safari (最新版本)
+- Edge (最新版本)
+
+## 许可证
+
+MIT

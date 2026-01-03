@@ -35,8 +35,8 @@ export const About: React.FC = () => {
 
         <h3>技术栈</h3>
         <ul>
-          <li><strong>Languages:</strong> C/C++ (Modern C++), Go, Rust (Learning)</li>
-          <li><strong>Frontend:</strong> React, Tailwind CSS (Just enough to build this blog)</li>
+          <li><strong>Languages:</strong> C/C++, Go, Java, Rust (Learning)</li>
+          <li><strong>Frontend:</strong> React, Vue, Tailwind CSS (Just enough to build this blog)</li>
           <li><strong>Infrastructure:</strong> Docker, Kubernetes, Linux Kernel</li>
         </ul>
 
