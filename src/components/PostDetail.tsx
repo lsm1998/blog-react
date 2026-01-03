@@ -22,7 +22,7 @@ export const PostDetail: React.FC = () => {
 
       <header className="mb-10 border-b pb-8">
         <div className="flex gap-2 mb-4">
-          {post.tags.map(tag => (
+          {post.tagNames.map((tag: string) => (
             <Link
               key={tag}
               to={`/tags/${tag}`}

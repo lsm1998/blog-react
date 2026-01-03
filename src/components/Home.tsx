@@ -1,10 +1,10 @@
-import React, { useState } from 'react'; // 1. 引入 useState
+import React, { useState } from 'react';
 import { PostCard } from './PostCard';
 import { ProfileCard } from './ProfileCard';
 import { useFetch } from '../hooks/useFetch';
 import { LoadingState, ErrorState } from './Status';
-import { Pagination } from './Pagination'; // 2. 引入分页组件
-import type { Article, PaginatedResponse } from '../types'; // 3. 引入新类型
+import { Pagination } from './Pagination';
+import type { Article, PaginatedResponse } from '../types';
 
 import { PAGINATION } from '../constants';
 
@@ -33,16 +33,15 @@ export const Home: React.FC = () => {
   const total = data?.total || 0;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="flex flex-col md:flex-row gap-8">
+    <div className="max-w-5xl mx-auto px-4 py-8">
+      <div className="flex flex-col md:flex-row gap-8 items-start">
         
-        {/* 左侧：文章列表 */}
         <div className="md:w-3/4">
            <h1 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 border-l-4 border-blue-500 pl-3">
               最新文章
            </h1>
            
-           <div className="space-y-6"> {/* 增加间距 */}
+           <div className="space-y-4"> 
              {articles.length > 0 ? (
                articles.map(post => (
                  <PostCard key={post.id} post={post} />
@@ -52,17 +51,21 @@ export const Home: React.FC = () => {
              )}
            </div>
 
-           {/* 7. 渲染分页组件 */}
-           <Pagination 
-             currentPage={page}
-             totalCount={total}
-             pageSize={PAGINATION.DEFAULT_PAGE_SIZE}
-             onPageChange={handlePageChange}
-           />
+           <div className="mt-8">
+              <Pagination 
+                currentPage={page}
+                totalCount={total}
+                pageSize={PAGINATION.DEFAULT_PAGE_SIZE}
+                onPageChange={handlePageChange}
+              />
+           </div>
         </div>
 
-        {/* 右侧：侧边栏 */}
-        <div className="md:w-1/4">
+        <div className="md:w-1/4 sticky top-6">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 border-l-4 border-purple-500 pl-3">
+             关于作者
+          </h2>
+          
           <ProfileCard />
         </div>
         

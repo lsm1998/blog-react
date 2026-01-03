@@ -4,7 +4,7 @@ export interface Article {
   title: string;
   summary: string;
   date: string;
-  tags: string[];
+  tagNames: string[];
   content: string;
 }
 

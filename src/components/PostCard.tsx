@@ -18,7 +18,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
         <span>{post.date}</span>
         <span className="mx-2 text-gray-300 dark:text-gray-600">•</span>
         <div className="flex flex-wrap gap-2">
-          {post.tags.map(tag => (
+          {post.tagNames.map(tag => (
             <Link
               key={tag}
               to={`/tags/${tag}`}
