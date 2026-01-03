@@ -5,4 +5,13 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:8888', // 后端服务器地址
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/api/, '') // 去掉 /api 前缀
+      }
+    }
+  }
 })

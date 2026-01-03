@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import type { BlogPost } from '../types';
+import type { Article } from '../types';
 
 interface PostCardProps {
-  post: BlogPost;
+  post: Article;
 }
 
 export const PostCard: React.FC<PostCardProps> = ({ post }) => {
@@ -14,7 +14,6 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
       rounded-lg p-6 mb-4 
       hover:shadow-md transition-all duration-300
     ">
-      {/* 头部：日期和标签 */}
       <div className="flex items-center flex-wrap gap-y-2 text-sm text-gray-500 dark:text-gray-400 mb-3">
         <span>{post.date}</span>
         <span className="mx-2 text-gray-300 dark:text-gray-600">•</span>
@@ -37,7 +36,6 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
         </div>
       </div>
 
-      {/* 标题：使用 group 确保 hover 效果平滑 */}
       <Link to={`/post/${post.id}`} className="block group">
         <h2 className="
           text-2xl font-bold mb-3 transition-colors duration-200
@@ -48,12 +46,10 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
         </h2>
       </Link>
 
-      {/* 摘要 */}
       <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
         {post.summary}
       </p>
 
-      {/* 阅读全文按钮 */}
       <Link 
         to={`/post/${post.id}`} 
         className="

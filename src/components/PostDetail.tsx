@@ -2,14 +2,12 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-// 选择一款类似 VS Code Dark 的代码主题
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { MOCK_POSTS } from '../data';
 
 export const PostDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  // 根据 URL 中的 ID 查找文章
   const post = MOCK_POSTS.find(p => p.id === Number(id));
 
   if (!post) {
@@ -18,12 +16,10 @@ export const PostDetail: React.FC = () => {
 
   return (
     <article className="max-w-4xl mx-auto px-4 py-8">
-      {/* 顶部返回导航 */}
       <Link to="/" className="text-blue-500 hover:underline mb-8 inline-block">
         ← 返回首页
       </Link>
 
-      {/* 文章头部信息 */}
       <header className="mb-10 border-b pb-8">
         <div className="flex gap-2 mb-4">
           {post.tags.map(tag => (
@@ -39,8 +35,6 @@ export const PostDetail: React.FC = () => {
         <h1 className="text-4xl font-bold text-gray-900 mb-4">{post.title}</h1>
         <div className="text-gray-500">{post.date}</div>
       </header>
-
-      {/* Markdown 正文渲染区域 */}
       <div className="prose dark:prose-invert prose-lg max-w-none text-gray-700 prose-headings:text-gray-900 prose-a:text-blue-600 prose-img:rounded-xl">
         <ReactMarkdown
           components={{
@@ -48,7 +42,7 @@ export const PostDetail: React.FC = () => {
               const { children, className, node, ...rest } = props
               const match = /language-(\w+)/.exec(className || '')
               return match ? (
-                // @ts-expect-error - 类型库定义有时会有点小问题，忽略即可
+                // @ts-expect-error 类型定义问题
                 <SyntaxHighlighter
                   {...rest}
                   PreTag="div"
