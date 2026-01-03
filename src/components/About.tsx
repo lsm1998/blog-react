@@ -29,8 +29,8 @@ export const About: React.FC = () => {
         </div>
 
 
-        {/* 渲染html富文本 */}
-        <div dangerouslySetInnerHTML={{ __html: userProfile.description }} />
+        <p dangerouslySetInnerHTML={{ __html: userProfile.description }}>
+        </p>
 
 
         <h3>技术栈</h3>
@@ -53,3 +53,4 @@ export const About: React.FC = () => {
     </div>
   );
 };
+
