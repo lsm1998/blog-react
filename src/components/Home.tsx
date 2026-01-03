@@ -1,40 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react'; // 1. 引入 useState
 import { PostCard } from './PostCard';
 import { ProfileCard } from './ProfileCard';
 import { useFetch } from '../hooks/useFetch';
 import { LoadingState, ErrorState } from './Status';
-import type { Article } from '../types';
+import { Pagination } from './Pagination'; // 2. 引入分页组件
+import type { Article, PaginatedResponse } from '../types'; // 3. 引入新类型
+
+import { PAGINATION } from '../constants';
 
 export const Home: React.FC = () => {
-  const { data: posts, loading, error } = useFetch<Article[]>('/api/article');
+  const [page, setPage] = useState(1);
+
+  const { data, loading, error } = useFetch<PaginatedResponse<Article>>(
+    `/api/article?page=${page}&pageSize=${PAGINATION.DEFAULT_PAGE_SIZE}`, 
+    [page] 
+  );
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   if (loading) {
-    return <LoadingState message="正在加载文章..." />;
+    return <LoadingState message={`正在加载第 ${page} 页...`} />;
   } 
 
   if (error) {
     return <ErrorState message={error} onRetry={() => window.location.reload()} />;
   }
 
+  const articles = data?.list || [];
+  const total = data?.total || 0;
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row gap-8">
         
-        {/* 左侧：文章列表 (占 75%) */}
+        {/* 左侧：文章列表 */}
         <div className="md:w-3/4">
            <h1 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 border-l-4 border-blue-500 pl-3">
               最新文章
            </h1>
-           <div>
-             {(posts || []).map(post => (
-               <PostCard key={post.id} post={post} />
-             ))}
+           
+           <div className="space-y-6"> {/* 增加间距 */}
+             {articles.length > 0 ? (
+               articles.map(post => (
+                 <PostCard key={post.id} post={post} />
+               ))
+             ) : (
+               <div className="text-gray-500 text-center py-10">暂无文章</div>
+             )}
            </div>
+
+           {/* 7. 渲染分页组件 */}
+           <Pagination 
+             currentPage={page}
+             totalCount={total}
+             pageSize={PAGINATION.DEFAULT_PAGE_SIZE}
+             onPageChange={handlePageChange}
+           />
         </div>
 
-        {/* 右侧：侧边栏 (占 25%) */}
+        {/* 右侧：侧边栏 */}
         <div className="md:w-1/4">
-          {/* 2. 直接使用组件，无需传入参数，因为组件内部自己会去 fetch */}
           <ProfileCard />
         </div>
         

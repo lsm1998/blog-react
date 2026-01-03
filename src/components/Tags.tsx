@@ -11,7 +11,7 @@ export const Tags: React.FC = () => {
   const tagData = useMemo(() => {
     const counts: Record<string, number> = {};
     MOCK_POSTS.forEach(post => {
-      post.tags.forEach(t => {
+      post.tags.forEach((t: string | number) => {
         counts[t] = (counts[t] || 0) + 1;
       });
     });

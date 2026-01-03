@@ -25,3 +25,8 @@ export interface Tag {
   name: string;
   count: number;
 }
+
+export interface PaginatedResponse<T> {
+  list: T[];    // 当前页的数据列表
+  total: number; // 数据库中的总条数
+}
